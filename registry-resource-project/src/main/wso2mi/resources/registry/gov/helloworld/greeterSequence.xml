@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="greeterSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+    <payloadFactory media-type="json" template-type="default">
+        <format>{"message": "Hello World"}</format>
+        <args>
+        </args>
+    </payloadFactory>
+
+    <log category="INFO" level="full" />
+
+<respond />
+
+</sequence>

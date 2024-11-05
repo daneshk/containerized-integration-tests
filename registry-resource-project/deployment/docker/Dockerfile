@@ -4,12 +4,16 @@ FROM ${BASE_IMAGE}
 # Copy project files to the docker image
 COPY --chown=wso2carbon:wso2 carbon-home/synapse-configs ${WSO2_SERVER_HOME}/repository/deployment/server/synapse-configs/default/
 COPY --chown=wso2carbon:wso2 carbon-home/dataservices ${WSO2_SERVER_HOME}/repository/deployment/server/dataservices/
+COPY --chown=wso2carbon:wso2 carbon-home/synapse-libs ${WSO2_SERVER_HOME}/repository/deployment/server/synapse-libs
 COPY --chown=wso2carbon:wso2 carbon-home/lib ${WSO2_SERVER_HOME}/lib/
 #COPY --chown=wso2carbon:wso2 carbon-home/dropins ${WSO2_SERVER_HOME}/dropins/
 
 COPY --chown=wso2carbon:wso2 carbon-home/repository/resources/security/wso2carbon.jks ${WSO2_SERVER_HOME}/repository/resources/security/wso2carbon.jks
 COPY --chown=wso2carbon:wso2 carbon-home/repository/resources/security/client-truststore.jks ${WSO2_SERVER_HOME}/repository/resources/security/client-truststore.jks
 COPY --chown=wso2carbon:wso2 carbon-home/conf ${WSO2_SERVER_HOME}/conf
+
+# Copy project registry resources to /tmp/registry
+COPY --chown=wso2carbon:wso2 carbon-home/registry ${WSO2_SERVER_HOME}/registry
 
 # Add new system properties to the extension-runner.sh
 RUN sed -i 's|-Dcarbon.home="$CARBON_HOME"|-Dcarbon.home="$CARBON_HOME" -Dcarbon.external.lib.dir.path="$CARBON_HOME"/lib -Dcarbon.dropins.dir.path="$CARBON_HOME"/dropins -Dcarbon.components.dir.path="$CARBON_HOME"/wso2/components -Dprofile="micro-integrator-default"|g' ${WSO2_SERVER_HOME}/bin/extension-runner.sh
@@ -19,8 +23,6 @@ RUN ${WSO2_SERVER_HOME}/bin/extension-runner.sh
 
 # List down all the files in the dropins directory
 RUN ls -l ${WSO2_SERVER_HOME}/dropins
-
-RUN cat ${WSO2_SERVER_HOME}/wso2/components/micro-integrator-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
 
 # micro-integrator script changes
 RUN sed -i 's|TMP_DIR=\"$CARBON_HOME\"/tmp|'TMP_DIR="/tmp/temp"'|g' ${WSO2_SERVER_HOME}/bin/micro-integrator.sh && \
@@ -54,6 +56,15 @@ ${WSO2_SERVER_HOME}/bin/micro-integrator.sh
 RUN sed -i "/# Create directories for registry mounts/a \mkdir -p /tmp/registry/config\nmkdir -p /tmp/registry/governance\nmkdir -p /tmp/registry/local\n" \
 ${WSO2_SERVER_HOME}/bin/micro-integrator.sh
 
+# Insert comment: Copy registry resources to /tmp/registry
+RUN sed -i "/#setting up profile parameter for runtime in MB/i \# Copy registry resources to /tmp/registry" \
+${WSO2_SERVER_HOME}/bin/micro-integrator.sh
+
+# Insert command: Copy registry resources to /tmp/registry
+RUN sed -i "/# Copy registry resources to \/tmp\/registry/a \cp -r ${WSO2_SERVER_HOME}/registry/* /tmp/registry\n" \
+${WSO2_SERVER_HOME}/bin/micro-integrator.sh
+
+RUN cat ${WSO2_SERVER_HOME}/bin/micro-integrator.sh
 
 # diagnostics-tool changes
 RUN sed -i 's|appender.R.fileName = ${sys:app.home}/logs/diagnostics.log|appender.R.fileName = /tmp/logs/diagnostics.log|g' ${WSO2_SERVER_HOME}/diagnostics-tool/conf/log4j2.properties

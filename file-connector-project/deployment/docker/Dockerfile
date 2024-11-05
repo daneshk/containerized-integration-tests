@@ -4,6 +4,7 @@ FROM ${BASE_IMAGE}
 # Copy project files to the docker image
 COPY --chown=wso2carbon:wso2 carbon-home/synapse-configs ${WSO2_SERVER_HOME}/repository/deployment/server/synapse-configs/default/
 COPY --chown=wso2carbon:wso2 carbon-home/dataservices ${WSO2_SERVER_HOME}/repository/deployment/server/dataservices/
+COPY --chown=wso2carbon:wso2 carbon-home/synapse-libs ${WSO2_SERVER_HOME}/repository/deployment/server/synapse-libs
 COPY --chown=wso2carbon:wso2 carbon-home/lib ${WSO2_SERVER_HOME}/lib/
 #COPY --chown=wso2carbon:wso2 carbon-home/dropins ${WSO2_SERVER_HOME}/dropins/
 

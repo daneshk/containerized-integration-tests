@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/healthcheck" name="HealthCheck" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/">
+        <inSequence>
+            <respond description="HealthCheck API" />
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource>
+</api>

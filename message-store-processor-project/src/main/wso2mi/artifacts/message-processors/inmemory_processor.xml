@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messageProcessor class="org.apache.synapse.message.processor.impl.sampler.SamplingProcessor"
+	name="inmemory_processor" messageStore="inmemory_store" xmlns="http://ws.apache.org/ns/synapse">
+	<parameter name="sequence">mp_sequence</parameter>
+	<parameter name="interval">1000</parameter>
+	<parameter name="is.active">true</parameter>
+	<parameter name="concurrency">1</parameter>
+</messageProcessor>

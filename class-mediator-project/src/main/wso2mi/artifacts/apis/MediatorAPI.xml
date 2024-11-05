@@ -2,13 +2,17 @@
 <api context="/mediatorapi" name="MediatorAPI" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="GET" uri-template="/">
         <inSequence>
+            <payloadFactory media-type="json">
+                <format>{"message": "Hello World"}</format>
+                <args />
+            </payloadFactory>
             <class name="org.wso2.samples.SimpleClassMediator">
-</class>
-            <property name="variable1" value="10"/>
-            <property name="variable2" value="5"/>
+                <property name="variable1" value="10"/>
+                <property name="variable2" value="5"/>
+            </class>
+            <log level="full"/>
             <respond />
         </inSequence>
-        <faultSequence>
-        </faultSequence>
+        <faultSequence />
     </resource>
 </api>

@@ -1,18 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.wso2.mi</groupId>
         <artifactId>containerized-integration-tests</artifactId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>class-mediator-project</artifactId>
+    <artifactId>file-connector-project</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>class-mediator-project</name>
-    <description>class-mediator-project</description>
+    <name>file-connector-project</name>
+    <description>file-connector-project</description>
 
     <repositories>
         <repository>
@@ -157,14 +158,14 @@
         </profile>
 
         <profile>
-          <id>test</id>
-          <build></build>
-          <properties>
-            <server.type>${testServerType}</server.type>
-            <server.host>${testServerHost}</server.host>
-            <server.port>${testServerPort}</server.port>
-            <server.path>${testServerPath}</server.path>
-          </properties>
+            <id>test</id>
+            <build></build>
+            <properties>
+                <server.type>${testServerType}</server.type>
+                <server.host>${testServerHost}</server.host>
+                <server.port>${testServerPort}</server.port>
+                <server.path>${testServerPath}</server.path>
+            </properties>
         </profile>
 
         <profile>
@@ -347,36 +348,36 @@
         </profile>
     </profiles>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.wso2.maven</groupId>
-                <artifactId>synapse-unit-test-maven-plugin</artifactId>
-                <version>5.2.73</version>
-                <executions>
-                    <execution>
-                        <id>synapse-unit-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>synapse-unit-test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <server>
-                        <testServerType>${server.type}</testServerType>
-                        <testServerHost>${server.host}</testServerHost>
-                        <testServerPort>${server.port}</testServerPort>
-                        <testServerPath>${server.path}</testServerPath>
-                        <testServerVersion>${server.version}</testServerVersion>
-                        <testServerDownloadLink>${server.download.link}</testServerDownloadLink>
-                    </server>
-                    <testCasesFilePath>${project.basedir}/src/test/wso2mi/${testFile}</testCasesFilePath>
-                    <mavenTestSkip>${maven.test.skip}</mavenTestSkip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.wso2.maven</groupId>-->
+<!--                <artifactId>synapse-unit-test-maven-plugin</artifactId>-->
+<!--                <version>5.2.73</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>synapse-unit-test</id>-->
+<!--                        <phase>test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>synapse-unit-test</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <server>-->
+<!--                        <testServerType>${server.type}</testServerType>-->
+<!--                        <testServerHost>${server.host}</testServerHost>-->
+<!--                        <testServerPort>${server.port}</testServerPort>-->
+<!--                        <testServerPath>${server.path}</testServerPath>-->
+<!--                        <testServerVersion>${server.version}</testServerVersion>-->
+<!--                        <testServerDownloadLink>${server.download.link}</testServerDownloadLink>-->
+<!--                    </server>-->
+<!--                    <testCasesFilePath>${project.basedir}/src/test/wso2mi/${testFile}</testCasesFilePath>-->
+<!--                    <mavenTestSkip>${maven.test.skip}</mavenTestSkip>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
     <dependencies>
         <dependency>
@@ -438,23 +439,30 @@
             <version>2.2</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.5.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <projectType>integration-project</projectType>
-    <uuid>4bec1794-af12-4a58-af39-111310e2bb92</uuid>
-    <hostname>myapp</hostname>
-    <!-- <archiveLocation>configure a custom target directory for CAPP</archiveLocation> -->
-    <keystore.type>JKS</keystore.type>
-    <keystore.name>wso2carbon.jks</keystore.name>
-    <keystore.password>wso2carbon</keystore.password>
-    <keystore.alias>wso2carbon</keystore.alias>
-    <ciphertool.enable>true</ciphertool.enable>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <project.scm.id>integration-project</project.scm.id>
-    <project.runtime.version>4.3.0</project.runtime.version>
-    <dockerfile.base.image>wso2/wso2mi:${project.runtime.version}</dockerfile.base.image>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <projectType>integration-project</projectType>
+        <uuid>4bec1794-af12-4a58-af39-111310e2bb92</uuid>
+        <hostname>myapp</hostname>
+        <!-- <archiveLocation>configure a custom target directory for CAPP</archiveLocation> -->
+        <keystore.type>JKS</keystore.type>
+        <keystore.name>wso2carbon.jks</keystore.name>
+        <keystore.password>wso2carbon</keystore.password>
+        <keystore.alias>wso2carbon</keystore.alias>
+        <ciphertool.enable>true</ciphertool.enable>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.scm.id>integration-project</project.scm.id>
+        <project.runtime.version>4.3.0</project.runtime.version>
+        <dockerfile.base.image>wso2/wso2mi:${project.runtime.version}</dockerfile.base.image>
+    </properties>
+
 </project>

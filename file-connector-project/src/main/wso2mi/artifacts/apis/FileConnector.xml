@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/fileconnector" name="FileConnector" xmlns="http://ws.apache.org/ns/synapse">
+	<resource methods="POST" uri-template="/create">
+		<inSequence>
+			<file.write configKey="local_file_connection">
+				<filePath>{json-eval($.filePath)}</filePath>
+				<contentOrExpression>{json-eval($.inputContent)}</contentOrExpression>
+				<mimeType>Automatic</mimeType>
+				<writeMode>Overwrite</writeMode>
+				<appendPosition>0</appendPosition>
+				<encoding>UTF-8</encoding>
+				<compress>false</compress>
+				<appendNewLine>false</appendNewLine>
+				<enableStreaming>false</enableStreaming>
+				<enableLock>false</enableLock>
+				<updateLastModified>true</updateLastModified>
+				<includeResultTo>Message Body</includeResultTo>
+			</file.write>
+		</inSequence>
+		<faultSequence>
+		</faultSequence>
+	</resource>
+	<resource methods="POST" uri-template="/read">
+		<inSequence>
+			<property name="path" expression="json-eval($.filePath)"/>
+			<file.checkExist configKey="local_file_connection">
+                <path>{$ctx:path}</path>
+                <includeResultTo>Message Body</includeResultTo>
+            </file.checkExist>
+			<switch source="json-eval($.checkExistResult.fileExists)">
+				<case regex="true">
+					<file.read configKey="local_file_connection">
+						<path>{$ctx:path}</path>
+						<readMode>Complete File</readMode>
+						<startLineNum>0</startLineNum>
+						<endLineNum>0</endLineNum>
+						<lineNum>0</lineNum>
+						<encoding>UTF-8</encoding>
+						<enableStreaming>false</enableStreaming>
+						<enableLock>false</enableLock>
+						<includeResultTo>Message Body</includeResultTo>
+					</file.read>
+					<respond/>
+				</case>
+				<default>
+					<log category="INFO" level="simple">
+						<property name="Status" value="File does not exist"/>
+					</log>
+					<drop/>
+				</default>
+			</switch>
+		</inSequence>
+		<faultSequence>
+		</faultSequence>
+	</resource>
+</api>

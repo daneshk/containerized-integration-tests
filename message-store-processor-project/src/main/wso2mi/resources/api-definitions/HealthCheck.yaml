@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: HealthCheck
+  description: API Definition of HealthCheck
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/healthcheck
+paths:
+  /:
+    get:
+      responses:
+        default:
+          description: Default response

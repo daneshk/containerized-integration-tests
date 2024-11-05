@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifacts>
+  <artifact name="greeterSequence" groupId="com.microintegrator.projects" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+    <item>
+      <file>greeterSequence.xml</file>
+      <path>/_system/governance/helloworld</path>
+      <mediaType>application/vnd.wso2.sequence</mediaType>
+      <properties/>
+    </item>
+  </artifact>
+</artifacts>

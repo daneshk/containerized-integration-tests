@@ -8,11 +8,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>class-mediator-project</artifactId>
-    <version>1.0.0</version>
+    <artifactId>message-store-processor-project</artifactId>
     <packaging>jar</packaging>
-    <name>class-mediator-project</name>
-    <description>class-mediator-project</description>
+    <name>message-store-processor-project</name>
+    <description>message-store-processor-project</description>
 
     <repositories>
         <repository>
@@ -119,7 +118,7 @@
                                 <goals>
                                     <goal>car</goal>
                                 </goals>
-                                <configuration></configuration>
+                                <configuration/>
                             </execution>
                         </executions>
                     </plugin>
@@ -157,14 +156,14 @@
         </profile>
 
         <profile>
-          <id>test</id>
-          <build></build>
-          <properties>
-            <server.type>${testServerType}</server.type>
-            <server.host>${testServerHost}</server.host>
-            <server.port>${testServerPort}</server.port>
-            <server.path>${testServerPath}</server.path>
-          </properties>
+            <id>test</id>
+            <build/>
+            <properties>
+                <server.type>${testServerType}</server.type>
+                <server.host>${testServerHost}</server.host>
+                <server.port>${testServerPort}</server.port>
+                <server.path>${testServerPath}</server.path>
+            </properties>
         </profile>
 
         <profile>
@@ -219,7 +218,7 @@
                                 <goals>
                                     <goal>car</goal>
                                 </goals>
-                                <configuration></configuration>
+                                <configuration/>
                             </execution>
                         </executions>
                     </plugin>
@@ -234,7 +233,7 @@
                                 <goals>
                                     <goal>docker-image</goal>
                                 </goals>
-                                <configuration></configuration>
+                                <configuration/>
                             </execution>
                         </executions>
                     </plugin>
@@ -272,14 +271,14 @@
                                     <target>
                                         <copy todir="${basedir}/target/tmp_docker/CompositeApps">
                                             <fileset dir="${basedir}/target">
-                                                <include name="*.car"></include>
+                                                <include name="*.car"/>
                                             </fileset>
                                         </copy>
                                     </target>
                                 </configuration>
                             </execution>
                         </executions>
-                        <configuration></configuration>
+                        <configuration/>
                     </plugin>
                     <plugin>
                         <groupId>io.fabric8</groupId>
@@ -438,23 +437,29 @@
             <version>2.2</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <projectType>integration-project</projectType>
-    <uuid>4bec1794-af12-4a58-af39-111310e2bb92</uuid>
-    <hostname>myapp</hostname>
-    <!-- <archiveLocation>configure a custom target directory for CAPP</archiveLocation> -->
-    <keystore.type>JKS</keystore.type>
-    <keystore.name>wso2carbon.jks</keystore.name>
-    <keystore.password>wso2carbon</keystore.password>
-    <keystore.alias>wso2carbon</keystore.alias>
-    <ciphertool.enable>true</ciphertool.enable>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <project.scm.id>integration-project</project.scm.id>
-    <project.runtime.version>4.3.0</project.runtime.version>
-    <dockerfile.base.image>wso2/wso2mi:${project.runtime.version}</dockerfile.base.image>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <projectType>integration-project</projectType>
+        <uuid>4bec1794-af12-4a58-af39-111310e2bb92</uuid>
+        <hostname>myapp</hostname>
+        <!-- <archiveLocation>configure a custom target directory for CAPP</archiveLocation> -->
+        <keystore.type>JKS</keystore.type>
+        <keystore.name>wso2carbon.jks</keystore.name>
+        <keystore.password>wso2carbon</keystore.password>
+        <keystore.alias>wso2carbon</keystore.alias>
+        <ciphertool.enable>true</ciphertool.enable>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.scm.id>integration-project</project.scm.id>
+        <project.runtime.version>4.3.0</project.runtime.version>
+        <dockerfile.base.image>wso2/wso2mi:${project.runtime.version}</dockerfile.base.image>
+    </properties>
 </project>

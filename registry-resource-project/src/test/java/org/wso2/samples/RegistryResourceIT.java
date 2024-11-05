@@ -2,8 +2,9 @@ package org.wso2.samples;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.Rule;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
@@ -15,16 +16,25 @@ import java.util.Objects;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertTrue;
 
-public class DockerIntegrationIT {
+/**
+ * Unit test for simple App.
+ */
+public class RegistryResourceIT {
     @Rule
-    public GenericContainer<?> appContainer = new GenericContainer<>("myapp/class-mediator-project:1.0.0")
+    public GenericContainer<?> registryContainer = new GenericContainer<>("myapp/registry-resource-project:1.0.0")
             .withExposedPorts(8290, 8253, 9164)
             // Use the cmd modifier to make the root filesystem read-only
             .withCreateContainerCmdModifier(cmd -> Objects.requireNonNull(cmd.getHostConfig()).withReadonlyRootfs(true))
             // Create a tmpfs mount at /tmp with read-write access
-            .waitingFor(Wait.forHttp("/mediatorapi").forStatusCode(200).withStartupTimeout(Duration.ofSeconds(60)))
+            .waitingFor(Wait.forHttp("/greeterapi").forStatusCode(200).withStartupTimeout(Duration.ofSeconds(60)))
             .withTmpFs(getTmpFsMounts())
             .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(60)));
+
+    @BeforeClass
+    public static void setup() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = 8290;
+    }
 
     // Helper method to create the tmpfs map
     private Map<String, String> getTmpFsMounts() {
@@ -37,16 +47,16 @@ public class DockerIntegrationIT {
 
     @Test
     public void testAppContainer() {
-        appContainer.start();
+        registryContainer.start();
 
-        assertTrue("The container should be running", appContainer.isRunning());
+        assertTrue("The container should be running", registryContainer.isRunning());
 
         // Get the container's exposed port
-        Integer port = appContainer.getMappedPort(8290);
-        String host = appContainer.getHost();
+        Integer port = registryContainer.getMappedPort(8290);
+        String host = registryContainer.getHost();
 
         // Interact with the container (e.g., send HTTP requests)
-        String url = "http://" + host + ":" + port + "/mediatorapi";
+        String url = "http://" + host + ":" + port + "/greeterapi";
         System.out.println("URL: " + url);
 
         // Validate the container's behavior
@@ -54,7 +64,7 @@ public class DockerIntegrationIT {
         // You can use RestAssured, HttpClient, etc., to verify the response
         // Invoke the url endpoint
         Response response = RestAssured.get(url);
-        String logs = appContainer.getLogs();
+        String logs = registryContainer.getLogs();
         System.out.println("Container logs: " + logs);
 
         response.then().log().all();

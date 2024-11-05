@@ -11,5 +11,8 @@
     <module>health-care-integration-project</module>
       <module>helloworld-project</module>
       <module>class-mediator-project</module>
+      <module>message-store-processor-project</module>
+      <module>file-connector-project</module>
+      <module>registry-resource-project</module>
   </modules>
 </project>
