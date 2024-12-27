@@ -1,0 +1,31 @@
+[container.image]
+baseImage="wso2/wso2mi:latest" # Base image of the container.
+repository="wso2inc" # Ex - Docker hub repository name.
+name="hello-k8s" # Container name
+tag="v0.1.0"
+
+[cloud.deployment]
+min_memory="500Mi" # Minimum memory required for the container.
+max_memory="1Gi" # Maximum memory a single container can take.
+min_cpu="500m"  # Minimum CPU required for the container.
+max_cpu="1000m" # Maximum CPU a single container can take.
+
+#[[cloud.secret.files]]
+#file="resource/keystore.p12"
+#mount_dir="/tmp/resources/security"
+#
+#[[cloud.secret.files]]
+#file="resource/truststore.p12"
+#mount_dir="/tmp/resources/security"
+
+#[[cloud.config.files]] # Mounts the `Config.toml` file as a config map in Kubernetes.
+#file="./Config.toml"
+
+#[cloud.deployment.probes.liveness]
+#port=9091
+#path="/probes/healthz"
+#
+#[cloud.deployment.probes.readiness]
+#port=9091
+#path="/probes/readyz"
+

@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class DockerIntegrationIT {
     @Rule
-    public GenericContainer<?> appContainer = new GenericContainer<>("myapp/helloworld-project:1.0.0")
+    public GenericContainer<?> appContainer = new GenericContainer<>("wso2inc/hello-k8s:v0.1.0")
             .withExposedPorts(8290, 8253, 9164)
             // Use the cmd modifier to make the root filesystem read-only
             .withCreateContainerCmdModifier(cmd -> Objects.requireNonNull(cmd.getHostConfig()).withReadonlyRootfs(true))
