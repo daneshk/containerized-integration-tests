@@ -19,8 +19,7 @@ RUN sed -i 's|TMP_DIR=\"$CARBON_HOME\"/tmp|'TMP_DIR="/tmp/temp"'|g' ${WSO2_SERVE
     sed -i 's|-DskipStartupExtensions=false|-DskipStartupExtensions=true|g' ${WSO2_SERVER_HOME}/bin/micro-integrator.sh && \
     sed -i 's|-Dcarbon.config.dir.path=\"$CARBON_HOME/conf\"|-Dcarbon.config.dir.path="/tmp/conf"|g' ${WSO2_SERVER_HOME}/bin/micro-integrator.sh && \
     sed -i 's|-Dconf.location=\"$CARBON_HOME/conf\"|-Dconf.location="/tmp/conf"|g' ${WSO2_SERVER_HOME}/bin/micro-integrator.sh && \
-    sed -i 's|-Djava.util.logging.config.file=\"$CARBON_HOME/conf/etc/logging-bridge.properties\"|-Djava.util.logging.config.file="/tmp/conf/etc/logging-bridge.properties"|g' \\
-    ${WSO2_SERVER_HOME}/bin/micro-integrator.sh
+    sed -i 's|-Djava.util.logging.config.file=\"$CARBON_HOME/conf/etc/logging-bridge.properties\"|-Djava.util.logging.config.file="/tmp/conf/etc/logging-bridge.properties"|g' ${WSO2_SERVER_HOME}/bin/micro-integrator.sh
 
 RUN sed -i '/org.wso2.micro.integrator.bootstrap.Bootstrap/i -DconfigParseOnly=true \\' ${WSO2_SERVER_HOME}/bin/micro-integrator.sh && \
     sed -i '/org.wso2.micro.integrator.bootstrap.Bootstrap/i -Dconfig.backup.path="/tmp/backup" \\' ${WSO2_SERVER_HOME}/bin/micro-integrator.sh
@@ -91,7 +90,7 @@ RUN ln -sf /tmp/logs ${WSO2_SERVER_HOME}/repository/logs
 
 # Create directories for server configuration files
 RUN mkdir -p /tmp/conf
-# give the write permission to the /tmp/conf \
+# give the write permission to the /tmp/conf
 RUN chown -R wso2carbon:wso2 /tmp/conf
 
 
