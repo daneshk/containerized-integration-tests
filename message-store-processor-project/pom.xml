@@ -277,11 +277,32 @@
                                 </goals>
                                 <configuration>
                                     <target>
-                                        <copy todir="${basedir}/target/tmp_docker/CompositeApps">
+                                        <copy todir="${basedir}/target/tmp_docker/carbon-home/carbonapps">
                                             <fileset dir="${basedir}/target">
                                                 <include name="*.car"/>
                                             </fileset>
                                         </copy>
+                                        <copy todir="${basedir}/target/tmp_docker">
+                                            <fileset dir="${basedir}/deployment/docker">
+                                                <include name="Dockerfile"/>
+                                            </fileset>
+                                        </copy>
+                                        <copy todir="${basedir}/target/tmp_docker/carbon-home/repository/resources/security">
+                                            <fileset dir="${basedir}/deployment/docker/resources">
+                                                <include name="*.jks"/>
+                                            </fileset>
+                                        </copy>
+                                        <copy todir="${basedir}/target/tmp_docker/carbon-home/conf">
+                                            <fileset dir="${basedir}/deployment">
+                                                <include name="*.toml"/>
+                                            </fileset>
+                                        </copy>
+                                        <copy todir="${basedir}/target/tmp_docker/libs">
+                                            <fileset dir="${basedir}/deployment/libs" />
+                                        </copy>
+                                        <!-- extract .car file and inside the extracted directory -->
+                                        <unzip src="${basedir}/target/tmp_docker/carbon-home/carbonapps/${project.artifactId}_${project.version}.car"
+                                               dest="${basedir}/target/tmp_docker/carbon-home/carbonapps/extracted/${project.artifactId}_${project.version}"/>
                                     </target>
                                 </configuration>
                             </execution>
@@ -449,6 +470,14 @@
                     </plugin>
                 </plugins>
             </build>
+            <properties>
+                <server.type>local</server.type>
+                <server.host>localhost</server.host>
+                <server.port>9008</server.port>
+                <server.path>/</server.path>
+                <server.version>${project.runtime.version}</server.version>
+                <server.download.link>${testServerDownloadLink}</server.download.link>
+            </properties>
         </profile>
     </profiles>
     <build>
